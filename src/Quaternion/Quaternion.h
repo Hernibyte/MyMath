@@ -24,6 +24,7 @@ namespace My
 		Vector3 EulerAngles();
 		void EulerAngles(Vector3 value);
 
+		Quaternion();
 		Quaternion(float x, float y, float z, float w);
 		Quaternion(const Quaternion& quaternion);
 		Quaternion(Vector3 vector, float w);

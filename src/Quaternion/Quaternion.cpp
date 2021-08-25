@@ -71,6 +71,13 @@ void Quaternion::EulerAngles(Vector3 value)
 	w = quaternion.w;
 }
 
+Quaternion::Quaternion() {
+	Quaternion::x = 0.0f;
+	Quaternion::y = 0.0f;
+	Quaternion::z = 0.0f;
+	Quaternion::w = 0.0f;
+}
+
 Quaternion::Quaternion(float x, float y, float z, float w)
 {
 	Quaternion::x = x;
