@@ -6,5 +6,6 @@
 #include "Quaternion/Quaternion.h"
 #include "Vector3/vector3.h"
 #include "Vector4/Vector4.h"
+#include "Transform/Transform.h"
 
 #endif // !MY_H

@@ -4,9 +4,6 @@
     <Filter Include="MyMath">
       <UniqueIdentifier>{d5e70452-a295-455a-a702-8965013ceca2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MyMath\Vector">
-      <UniqueIdentifier>{f1f6d5b0-35ab-4910-99c4-cbd3e3448202}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MyMath\Quaternion">
       <UniqueIdentifier>{57860c09-6ec2-4829-b578-b3c24386338c}</UniqueIdentifier>
     </Filter>
@@ -19,42 +16,54 @@
     <Filter Include="MyMath\Matrix4x4">
       <UniqueIdentifier>{0ac24b5b-fcdd-43c4-ac7d-e1965a54a8be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyMath\Transform">
+      <UniqueIdentifier>{afc2b188-63c8-4387-9659-89acf60818c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyMath\Vector3">
+      <UniqueIdentifier>{f1f6d5b0-35ab-4910-99c4-cbd3e3448202}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\MathEx\MathEx.h">
-      <Filter>MyMath\MathEx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Quaternion\Quaternion.h">
-      <Filter>MyMath\Quaternion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Vector3\vector3.h">
-      <Filter>MyMath\Vector</Filter>
+    <ClInclude Include="..\src\My.h">
+      <Filter>MyMath</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Vector4\Vector4.h">
       <Filter>MyMath\Vector4</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Vector3\vector3.h">
+      <Filter>MyMath\Vector3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Quaternion\Quaternion.h">
+      <Filter>MyMath\Quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Transform\Transform.h">
+      <Filter>MyMath\Transform</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\Matrix4x4\Matrix4x4.h">
       <Filter>MyMath\Matrix4x4</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\My.h">
-      <Filter>MyMath</Filter>
+    <ClInclude Include="..\src\MathEx\MathEx.h">
+      <Filter>MyMath\MathEx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\MathEx\MathEx.cpp">
-      <Filter>MyMath\MathEx</Filter>
+    <ClCompile Include="..\src\Vector4\Vector4.cpp">
+      <Filter>MyMath\Vector4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Vector3\vector3.cpp">
+      <Filter>MyMath\Vector3</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Quaternion\Quaternion.cpp">
       <Filter>MyMath\Quaternion</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Vector3\vector3.cpp">
-      <Filter>MyMath\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Vector4\Vector4.cpp">
-      <Filter>MyMath\Vector4</Filter>
+    <ClCompile Include="..\src\Transform\Transform.cpp">
+      <Filter>MyMath\Transform</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Matrix4x4\Matrix4x4.cpp">
       <Filter>MyMath\Matrix4x4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MathEx\MathEx.cpp">
+      <Filter>MyMath\MathEx</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -19,19 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\MathEx\MathEx.cpp" />
-    <ClCompile Include="..\src\Matrix4x4\Matrix4x4.cpp" />
-    <ClCompile Include="..\src\Quaternion\Quaternion.cpp" />
-    <ClCompile Include="..\src\Vector3\vector3.cpp" />
-    <ClCompile Include="..\src\Vector4\Vector4.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\src\MathEx\MathEx.h" />
     <ClInclude Include="..\src\Matrix4x4\Matrix4x4.h" />
     <ClInclude Include="..\src\My.h" />
     <ClInclude Include="..\src\Quaternion\Quaternion.h" />
+    <ClInclude Include="..\src\Transform\Transform.h" />
     <ClInclude Include="..\src\Vector3\vector3.h" />
     <ClInclude Include="..\src\Vector4\Vector4.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\MathEx\MathEx.cpp" />
+    <ClCompile Include="..\src\Matrix4x4\Matrix4x4.cpp" />
+    <ClCompile Include="..\src\Quaternion\Quaternion.cpp" />
+    <ClCompile Include="..\src\Transform\Transform.cpp" />
+    <ClCompile Include="..\src\Vector3\vector3.cpp" />
+    <ClCompile Include="..\src\Vector4\Vector4.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
