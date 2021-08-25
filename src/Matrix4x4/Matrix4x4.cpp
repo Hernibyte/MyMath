@@ -27,6 +27,25 @@ Vector3 Matrix4x4::lossyScale()
 	return Vector3(m00, m11, m22);
 }
 
+Matrix4x4::Matrix4x4() {
+	m00 = 0.0f;
+	m01 = 0.0f;
+	m02 = 0.0f;
+	m03 = 0.0f;
+	m10 = 0.0f;
+	m11 = 0.0f;
+	m12 = 0.0f;
+	m13 = 0.0f;
+	m20 = 0.0f;
+	m21 = 0.0f;
+	m22 = 0.0f;
+	m23 = 0.0f;
+	m30 = 0.0f;
+	m31 = 0.0f;
+	m32 = 0.0f;
+	m33 = 0.0f;
+}
+
 Matrix4x4::Matrix4x4(Vector4 column0, Vector4 column1, Vector4 column2, Vector4 column3)
 {
 	m00 = column0.x;
@@ -178,70 +197,90 @@ void Matrix4x4::SetRow(int index, Vector4 row)
 	}
 }
 
-void Matrix4x4::SetTRS(Vector3 position, Quaternion rotation, Vector3 scale)
+void Matrix4x4::TRS(Vector3 position, Quaternion rotation, Vector3 scale)
 {
-	Matrix4x4 trs = TRS(position, rotation, scale);
-	m00 = trs.m00;
-	m01 = trs.m01;
-	m02 = trs.m02;
-	m03 = trs.m03;
-	m10 = trs.m10;
-	m11 = trs.m11;
-	m12 = trs.m12;
-	m13 = trs.m13;
-	m20 = trs.m20;
-	m21 = trs.m21;
-	m22 = trs.m22;
-	m23 = trs.m23;
-	m30 = trs.m30;
-	m31 = trs.m31;
-	m32 = trs.m32;
-	m33 = trs.m33;
+	Translate(position);
+	Rotate(rotation);
+	Scale(scale);
 }
 
-Matrix4x4 Matrix4x4::Rotate(Quaternion quaternion)
+void Matrix4x4::Translate(Vector3 translate) 
 {
-	Matrix4x4 mat = identity;
-	mat.m02 = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
-	mat.m12 = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
-	mat.m22 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
-
-	mat.m00 = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
-	mat.m10 = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
-	mat.m20 = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
-
-	mat.m01 = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
-	mat.m11 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
-	mat.m21 = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
-	return mat;
+	this->m03 += translate.x;
+	this->m13 += translate.y;
+	this->m23 += translate.z;
+	this->m33 = 1;
 }
 
-Matrix4x4 Matrix4x4::Scale(Vector3 scale)
+void Matrix4x4::Scale(Vector3 scale)
 {
-	Matrix4x4 mat = zero;
-	mat.m00 *= scale.x;
-	mat.m11 *= scale.y;
-	mat.m22 *= scale.z;
-	mat.m33 = 1;
-	return mat;
+	this->m00 *= scale.x;
+	this->m11 *= scale.y;
+	this->m22 *= scale.z;
+	this->m33 = 1;
 }
 
-Matrix4x4 Matrix4x4::Translate(Vector3 translate)
+void Matrix4x4::Rotate(Quaternion quaternion)
 {
-	Matrix4x4 mat = zero;
-	mat.m03 += translate.x;
-	mat.m13 += translate.y;
-	mat.m23 += translate.z;
-	mat.m33 = 1;
-	return mat;
+	this->m02 = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
+	this->m12 = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
+	this->m22 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
+	
+	this->m00 = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
+	this->m10 = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
+	this->m20 = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
+	
+	this->m01 = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
+	this->m11 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
+	this->m21 = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
 }
 
-Matrix4x4 Matrix4x4::TRS(Vector3 position, Quaternion rotation, Vector3 scale)
+Matrix4x4 Matrix4x4::Rotate(Matrix4x4 matrix, Quaternion quaternion)
 {
-	Matrix4x4 _tranlate = Translate(position);
-	Matrix4x4 _rotate = Rotate(rotation);
-	Matrix4x4 _scale = Scale(scale);
-	Matrix4x4 trs = _tranlate * _rotate * _scale;
+	matrix.m02 = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
+	matrix.m12 = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
+	matrix.m22 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
+
+	matrix.m00 = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
+	matrix.m10 = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
+	matrix.m20 = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
+
+	matrix.m01 = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
+	matrix.m11 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
+	matrix.m21 = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
+	return matrix;
+}
+
+Matrix4x4 Matrix4x4::Scale(Matrix4x4 matrix, Vector3 scale)
+{
+	matrix.m00 *= scale.x;
+	matrix.m11 *= scale.y;
+	matrix.m22 *= scale.z;
+	matrix.m33 = 1;
+	return matrix;
+}
+
+Matrix4x4 Matrix4x4::Translate(Matrix4x4 matrix, Vector3 translate)
+{
+	matrix.m03 += translate.x;
+	matrix.m13 += translate.y;
+	matrix.m23 += translate.z;
+	matrix.m33 = 1;
+	return matrix;
+}
+
+Matrix4x4 Matrix4x4::TRS(Matrix4x4 matrix, Matrix4x4 translate, Matrix4x4 rotate, Matrix4x4 scale)
+{
+	matrix = translate * rotate * scale;
+	return matrix;
+}
+
+Matrix4x4 Matrix4x4::TRS(Matrix4x4 translate, Matrix4x4 rotate, Matrix4x4 scale, Vector3 position, Quaternion rotation, Vector3 scalar)
+{
+	translate = Translate(translate, position);
+	rotate = Rotate(rotate, rotation);
+	scale = Scale(scale, scalar);
+	Matrix4x4 trs = translate * rotate * scale;
 	return trs;
 }
 

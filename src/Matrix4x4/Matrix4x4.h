@@ -30,6 +30,7 @@ namespace My
         Matrix4x4 transpose();
         Vector3 lossyScale();
 
+        Matrix4x4();
         Matrix4x4(Vector4 column0, Vector4 column1, Vector4 column2, Vector4 column3);
         Matrix4x4(const Matrix4x4& matrix);
 	    
@@ -38,15 +39,23 @@ namespace My
         void SetColumn(int index, Vector4 column);
         void SetRow(int index, Vector4 row);
 
-        void SetTRS(Vector3 position, Quaternion rotation, Vector3 scale);
+        void TRS(Vector3 position, Quaternion rotation, Vector3 scale);
 
-        static Matrix4x4 Rotate(Quaternion quaternion);
+        void Translate(Vector3 translate);
 
-        static Matrix4x4 Scale(Vector3 scale);
+        void Scale(Vector3 scale);
 
-        static Matrix4x4 Translate(Vector3 translate);
+        void Rotate(Quaternion quaternion);
 
-        static Matrix4x4 TRS(Vector3 position, Quaternion rotation, Vector3 scale);
+        static Matrix4x4 Rotate(Matrix4x4 matrix, Quaternion quaternion);
+
+        static Matrix4x4 Scale(Matrix4x4 matrix, Vector3 scale);
+
+        static Matrix4x4 Translate(Matrix4x4 matrix, Vector3 translate);
+
+        static Matrix4x4 TRS(Matrix4x4 matrix, Matrix4x4 translate, Matrix4x4 rotate, Matrix4x4 scale);
+
+        static Matrix4x4 TRS(Matrix4x4 translate, Matrix4x4 rotate, Matrix4x4 scale, Vector3 position, Quaternion rotation, Vector3 scalar);
     };
 
     Vector4 operator*(Matrix4x4 a, Vector4 vector);
