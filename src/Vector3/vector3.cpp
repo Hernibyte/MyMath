@@ -41,7 +41,7 @@ float Vector3::Angle(Vector3 from, Vector3 to)
 {
 	float dotResult = Dot(from, to);
 	float magProduct = Magnitude(from) * Magnitude(to);
-	float arcosTitha = std::acos(dotResult / magProduct);
+	float arcosTitha = Acos(dotResult / magProduct);
 	return (arcosTitha) / (3.14159265358979323846f / 180);
 }
 Vector3 Vector3::ClampMagnitude(Vector3 vector, float maxLength)
@@ -53,10 +53,10 @@ Vector3 Vector3::ClampMagnitude(Vector3 vector, float maxLength)
 }
 float Vector3::Magnitude(float x, float y, float z)
 {
-	return std::sqrt(
-		std::pow(x, 2) +
-		std::pow(y, 2) +
-		std::pow(z, 2));
+	return Sqrt(
+		Pow(x, 2) +
+		Pow(y, 2) +
+		Pow(z, 2));
 }
 float Vector3::Magnitude(Vector3 vector)
 {
@@ -72,10 +72,10 @@ Vector3 Vector3::Cross(Vector3 a, Vector3 b)
 }
 float Vector3::Distance(Vector3 a, Vector3 b)
 {
-	return std::sqrt(
-		std::pow((a.x - b.x), 2) +
-		std::pow((a.y - b.y), 2) +
-		std::pow((a.z - b.z), 2));
+	return Sqrt(
+		Pow((a.x - b.x), 2) +
+		Pow((a.y - b.y), 2) +
+		Pow((a.z - b.z), 2));
 }
 float Vector3::Dot(Vector3 a, Vector3 b)
 {
