@@ -117,7 +117,7 @@ Vector3 Vector3::Min(Vector3 a, Vector3 b)
 }
 float Vector3::SqrMagnitude(Vector3 vector)
 {
-	return std::sqrt(Magnitude(vector));
+	return Sqrt(Magnitude(vector));
 }
 Vector3 Vector3::Normalize(Vector3& vector)
 {
