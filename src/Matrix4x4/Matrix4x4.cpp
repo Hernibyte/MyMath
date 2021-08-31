@@ -16,74 +16,50 @@ Matrix4x4 Matrix4x4::zero = Matrix4x4(
 Matrix4x4 Matrix4x4::transpose() 
 {
 	return Matrix4x4(
-				Vector4(m00, m01, m02, m03),
-				Vector4(m10, m11, m12, m13),
-				Vector4(m20, m21, m22, m23),
-				Vector4(m30, m31, m32, m33));
-} 
+				Vector4(value[0], value[1], value[2], value[3]),
+				Vector4(value[4], value[5], value[6], value[7]),
+				Vector4(value[8], value[9], value[10], value[11]),
+				Vector4(value[12], value[13], value[14], value[15]));
+}
 
 Vector3 Matrix4x4::lossyScale() 
 {
-	return Vector3(m00, m11, m22);
+	return Vector3(value[0], value[5], value[10]);
 }
 
 Matrix4x4::Matrix4x4() {
-	m00 = 0.0f;
-	m01 = 0.0f;
-	m02 = 0.0f;
-	m03 = 0.0f;
-	m10 = 0.0f;
-	m11 = 0.0f;
-	m12 = 0.0f;
-	m13 = 0.0f;
-	m20 = 0.0f;
-	m21 = 0.0f;
-	m22 = 0.0f;
-	m23 = 0.0f;
-	m30 = 0.0f;
-	m31 = 0.0f;
-	m32 = 0.0f;
-	m33 = 0.0f;
+	for (int i = 0; i < 16; i++) 
+	{
+		value[i] = 0.0f;
+	}
 }
 
 Matrix4x4::Matrix4x4(Vector4 column0, Vector4 column1, Vector4 column2, Vector4 column3)
 {
-	m00 = column0.x;
-	m01 = column1.x;
-	m02 = column2.x;
-	m03 = column3.x;
-	m10 = column0.y;
-	m11 = column1.y;
-	m12 = column2.y;
-	m13 = column3.y;
-	m20 = column0.z;
-	m21 = column1.z;
-	m22 = column2.z;
-	m23 = column3.z;
-	m30 = column0.w;
-	m31 = column1.w;
-	m32 = column2.w;
-	m33 = column3.w;
+	value[0] = column0.x;
+	value[1] = column1.x;
+	value[2] = column2.x;
+	value[3] = column3.x;
+	value[4] = column0.y;
+	value[5] = column1.y;
+	value[6] = column2.y;
+	value[7] = column3.y;
+	value[8] = column0.z;
+	value[9] = column1.z;
+	value[10] = column2.z;
+	value[11] = column3.z;
+	value[12] = column0.w;
+	value[13] = column1.w;
+	value[14] = column2.w;
+	value[15] = column3.w;
 }
 
 Matrix4x4::Matrix4x4(const Matrix4x4& matrix)
 {
-	m00 = matrix.m00;
-	m01 = matrix.m01;
-	m02 = matrix.m02;
-	m03 = matrix.m03;
-	m10 = matrix.m10;
-	m11 = matrix.m11;
-	m12 = matrix.m12;
-	m13 = matrix.m13;
-	m20 = matrix.m20;
-	m21 = matrix.m21;
-	m22 = matrix.m22;
-	m23 = matrix.m23;
-	m30 = matrix.m30;
-	m31 = matrix.m31;
-	m32 = matrix.m32;
-	m33 = matrix.m33;
+	for (int i = 0; i < 16; i++) 
+	{
+		value[i] = matrix.value[i];
+	}
 }
 
 Vector4 Matrix4x4::GetColumn(int index)
@@ -91,16 +67,16 @@ Vector4 Matrix4x4::GetColumn(int index)
 	switch (index)
 	{
 	case 0:
-		return Vector4(m00, m10, m20, m30);
+		return Vector4(value[0], value[4], value[8], value[12]);
 		break;
 	case 1:
-		return Vector4(m01, m11, m21, m31);
+		return Vector4(value[1], value[5], value[9], value[13]);
 		break;
 	case 2:
-		return Vector4(m02, m12, m22, m23);
+		return Vector4(value[2], value[6], value[10], value[14]);
 		break;
 	case 3:
-		return Vector4(m03, m13, m23, m33);
+		return Vector4(value[3], value[7], value[11], value[15]);
 		break;
 	default:
 		throw "Out of range: Use 0, 1, 2 or 3";
@@ -113,16 +89,16 @@ Vector4 Matrix4x4::GetRow(int index)
 	switch (index)
 	{
 	case 0:
-		return Vector4(m00, m01, m02, m03);
+		return Vector4(value[0], value[1], value[2], value[3]);
 		break;
 	case 1:
-		return Vector4(m10, m11, m12, m13);
+		return Vector4(value[4], value[5], value[6], value[7]);
 		break;
 	case 2:
-		return Vector4(m20, m21, m22, m23);
+		return Vector4(value[8], value[9], value[10], value[11]);
 		break;
 	case 3:
-		return Vector4(m30, m31, m32, m33);
+		return Vector4(value[12], value[13], value[14], value[15]);
 		break;
 	default:
 		throw "Out of range: Use 0, 1, 2 or 3";
@@ -135,28 +111,28 @@ void Matrix4x4::SetColumn(int index, Vector4 column)
 	switch (index)
 	{
 	case 0:
-		m00 = column.x;
-		m10 = column.y;
-		m20 = column.z;
-		m30 = column.w;
+		value[0] = column.x;
+		value[4] = column.y;
+		value[8] = column.z;
+		value[12] = column.w;
 		break;
 	case 1:
-		m01 = column.x;
-		m11 = column.y;
-		m21 = column.z;
-		m31 = column.w;
+		value[1] = column.x;
+		value[5] = column.y;
+		value[9] = column.z;
+		value[13] = column.w;
 		break;
 	case 2:
-		m02 = column.x;
-		m12 = column.y;
-		m22 = column.z;
-		m32 = column.w;
+		value[2] = column.x;
+		value[6] = column.y;
+		value[10] = column.z;
+		value[14] = column.w;
 		break;
 	case 3:
-		m03 = column.x;
-		m13 = column.y;
-		m23 = column.z;
-		m33 = column.w;
+		value[3] = column.x;
+		value[7] = column.y;
+		value[11] = column.z;
+		value[15] = column.w;
 		break;
 	default:
 		throw "Out of range: Use 0, 1, 2 or 3";
@@ -168,33 +144,44 @@ void Matrix4x4::SetRow(int index, Vector4 row)
 {
 	switch (index) {
 	case 0:
-		m00 = row.x;
-		m01 = row.y;
-		m02 = row.z;
-		m03 = row.w;
+		value[0] = row.x;
+		value[1] = row.y;
+		value[2] = row.z;
+		value[3] = row.w;
 		break;
 	case 1:
-		m10 = row.x;
-		m11 = row.y;
-		m12 = row.z;
-		m13 = row.w;
+		value[4] = row.x;
+		value[5] = row.y;
+		value[6] = row.z;
+		value[7] = row.w;
 		break;
 	case 2:
-		m20 = row.x;
-		m21 = row.y;
-		m22 = row.z;
-		m23 = row.w;
+		value[8] = row.x;
+		value[9] = row.y;
+		value[10] = row.z;
+		value[11] = row.w;
 		break;
 	case 3:
-		m30 = row.x;
-		m31 = row.y;
-		m32 = row.z;
-		m33 = row.w;
+		value[12] = row.x;
+		value[13] = row.y;
+		value[14] = row.z;
+		value[15] = row.w;
 		break;
 	default:
 		throw "Out of range: Use 0, 1, 2 or 3";
 		break;
 	}
+}
+
+float Matrix4x4::Value_ptr()
+{
+	return value[0];
+}
+
+float Matrix4x4::Value_ptr(int i)
+{
+	if (i < 15 && i > 0)
+		return value[i];
 }
 
 void Matrix4x4::TRS(Vector3 position, Quaternion rotation, Vector3 scale)
@@ -206,66 +193,77 @@ void Matrix4x4::TRS(Vector3 position, Quaternion rotation, Vector3 scale)
 
 void Matrix4x4::Translate(Vector3 translate) 
 {
-	this->m03 += translate.x;
-	this->m13 += translate.y;
-	this->m23 += translate.z;
-	this->m33 = 1;
+	this->value[3] += translate.x;
+	this->value[7] += translate.y;
+	this->value[11] += translate.z;
+	this->value[15] = 1;
 }
 
 void Matrix4x4::Scale(Vector3 scale)
 {
-	this->m00 *= scale.x;
-	this->m11 *= scale.y;
-	this->m22 *= scale.z;
-	this->m33 = 1;
+	this->value[0] *= scale.x;
+	this->value[5] *= scale.y;
+	this->value[10] *= scale.z;
+	this->value[15] = 1;
 }
 
 void Matrix4x4::Rotate(Quaternion quaternion)
 {
-	this->m02 = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
-	this->m12 = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
-	this->m22 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
+	this->value[2] = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
+	this->value[6] = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
+	this->value[10] = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
 	
-	this->m00 = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
-	this->m10 = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
-	this->m20 = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
+	this->value[0] = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
+	this->value[4] = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
+	this->value[8] = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
 	
-	this->m01 = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
-	this->m11 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
-	this->m21 = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
+	this->value[1] = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
+	this->value[5] = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
+	this->value[9] = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
+}
+
+float Matrix4x4::Value_ptr(Matrix4x4 matrix, int i)
+{
+	if (i < 15 && i > 0)
+		return matrix.value[i];
+}
+
+float Matrix4x4::Value_ptr(Matrix4x4 matrix)
+{
+	return matrix.value[0];
 }
 
 Matrix4x4 Matrix4x4::Rotate(Matrix4x4 matrix, Quaternion quaternion)
 {
-	matrix.m02 = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
-	matrix.m12 = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
-	matrix.m22 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
+	matrix.value[2] = 2.0f * (quaternion.x * quaternion.z) + 2.0f * (quaternion.y * quaternion.w);
+	matrix.value[6] = 2.0f * (quaternion.y * quaternion.z) - 2.0f * (quaternion.x * quaternion.w);
+	matrix.value[10] = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.y * quaternion.y);
 
-	matrix.m00 = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
-	matrix.m10 = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
-	matrix.m20 = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
+	matrix.value[0] = 1 - 2.0f * (quaternion.y * quaternion.y) - 2.0f * (quaternion.z * quaternion.z);
+	matrix.value[4] = 2.0f * (quaternion.x * quaternion.y) + 2.0f * (quaternion.z * quaternion.w);
+	matrix.value[8] = 2.0f * (quaternion.x * quaternion.z) - 2.0f * (quaternion.y * quaternion.w);
 
-	matrix.m01 = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
-	matrix.m11 = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
-	matrix.m21 = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
+	matrix.value[1] = 2.0f * (quaternion.x * quaternion.y) - 2.0f * (quaternion.z * quaternion.w);
+	matrix.value[5] = 1 - 2.0f * (quaternion.x * quaternion.x) - 2.0f * (quaternion.z * quaternion.z);
+	matrix.value[9] = 2.0f * (quaternion.y * quaternion.z) + 2.0f * (quaternion.x * quaternion.w);
 	return matrix;
 }
 
 Matrix4x4 Matrix4x4::Scale(Matrix4x4 matrix, Vector3 scale)
 {
-	matrix.m00 *= scale.x;
-	matrix.m11 *= scale.y;
-	matrix.m22 *= scale.z;
-	matrix.m33 = 1;
+	matrix.value[0] *= scale.x;
+	matrix.value[5] *= scale.y;
+	matrix.value[10] *= scale.z;
+	matrix.value[15] = 1;
 	return matrix;
 }
 
 Matrix4x4 Matrix4x4::Translate(Matrix4x4 matrix, Vector3 translate)
 {
-	matrix.m03 += translate.x;
-	matrix.m13 += translate.y;
-	matrix.m23 += translate.z;
-	matrix.m33 = 1;
+	matrix.value[3] += translate.x;
+	matrix.value[7] += translate.y;
+	matrix.value[11] += translate.z;
+	matrix.value[15] = 1;
 	return matrix;
 }
 
@@ -287,44 +285,44 @@ Matrix4x4 Matrix4x4::TRS(Matrix4x4 translate, Matrix4x4 rotate, Matrix4x4 scale,
 Vector4 My::operator*(Matrix4x4 a, Vector4 vector)
 {
 	Vector4 newVec4 = Vector4::zero;
-	newVec4.x = (a.m00 * vector.x) + (a.m01 * vector.y) + (a.m02 * vector.z) + (a.m03 * vector.w);
-	newVec4.y = (a.m10 * vector.x) + (a.m11 * vector.y) + (a.m12 * vector.z) + (a.m13 * vector.w);
-	newVec4.z = (a.m20 * vector.x) + (a.m21 * vector.y) + (a.m22 * vector.z) + (a.m23 * vector.w);
-	newVec4.w = (a.m30 * vector.x) + (a.m31 * vector.y) + (a.m32 * vector.z) + (a.m33 * vector.w);
+	newVec4.x = (a.value[0] * vector.x) + (a.value[1] * vector.y) + (a.value[2] * vector.z) + (a.value[3] * vector.w);
+	newVec4.y = (a.value[4] * vector.x) + (a.value[5] * vector.y) + (a.value[6] * vector.z) + (a.value[7] * vector.w);
+	newVec4.z = (a.value[8] * vector.x) + (a.value[9] * vector.y) + (a.value[10] * vector.z) + (a.value[11] * vector.w);
+	newVec4.w = (a.value[12] * vector.x) + (a.value[13] * vector.y) + (a.value[14] * vector.z) + (a.value[15] * vector.w);
 	return newVec4;
 }
 
 Matrix4x4 My::operator*(Matrix4x4 a, Matrix4x4 b)
 {
 	Matrix4x4 matXMat = Matrix4x4::zero;
-	matXMat.m00 = (a.m00 * b.m00) + (a.m01 * b.m10) + (a.m02 * b.m20) + (a.m03 * b.m30);
-	matXMat.m01 = (a.m00 * b.m01) + (a.m01 * b.m11) + (a.m02 * b.m21) + (a.m03 * b.m31);
-	matXMat.m02 = (a.m00 * b.m02) + (a.m01 * b.m12) + (a.m02 * b.m22) + (a.m03 * b.m32);
-	matXMat.m03 = (a.m00 * b.m03) + (a.m01 * b.m13) + (a.m02 * b.m23) + (a.m03 * b.m33);
+	matXMat.value[0] = (a.value[0] * b.value[0]) + (a.value[1] * b.value[4]) + (a.value[2] * b.value[8]) + (a.value[3] * b.value[12]);
+	matXMat.value[1] = (a.value[0] * b.value[1]) + (a.value[1] * b.value[5]) + (a.value[2] * b.value[9]) + (a.value[3] * b.value[13]);
+	matXMat.value[2] = (a.value[0] * b.value[2]) + (a.value[1] * b.value[6]) + (a.value[2] * b.value[10]) + (a.value[3] * b.value[14]);
+	matXMat.value[3] = (a.value[0] * b.value[3]) + (a.value[1] * b.value[7]) + (a.value[2] * b.value[11]) + (a.value[3] * b.value[15]);
 
-	matXMat.m10 = (a.m10 * b.m00) + (a.m11 * b.m10) + (a.m12 * b.m20) + (a.m13 * b.m30);
-	matXMat.m11 = (a.m10 * b.m01) + (a.m11 * b.m11) + (a.m12 * b.m21) + (a.m13 * b.m31);
-	matXMat.m12 = (a.m10 * b.m02) + (a.m11 * b.m12) + (a.m12 * b.m22) + (a.m13 * b.m32);
-	matXMat.m13 = (a.m10 * b.m03) + (a.m11 * b.m13) + (a.m12 * b.m23) + (a.m13 * b.m33);
+	matXMat.value[4] = (a.value[4] * b.value[0]) + (a.value[5] * b.value[4]) + (a.value[6] * b.value[8]) + (a.value[7] * b.value[12]);
+	matXMat.value[5] = (a.value[4] * b.value[1]) + (a.value[5] * b.value[5]) + (a.value[6] * b.value[9]) + (a.value[7] * b.value[13]);
+	matXMat.value[6] = (a.value[4] * b.value[2]) + (a.value[5] * b.value[6]) + (a.value[6] * b.value[10]) + (a.value[7] * b.value[14]);
+	matXMat.value[7] = (a.value[4] * b.value[3]) + (a.value[5] * b.value[7]) + (a.value[6] * b.value[11]) + (a.value[7] * b.value[15]);
 
-	matXMat.m20 = (a.m20 * b.m00) + (a.m21 * b.m10) + (a.m22 * b.m20) + (a.m23 * b.m30);
-	matXMat.m21 = (a.m20 * b.m01) + (a.m21 * b.m11) + (a.m22 * b.m21) + (a.m23 * b.m31);
-	matXMat.m22 = (a.m20 * b.m02) + (a.m21 * b.m12) + (a.m22 * b.m22) + (a.m23 * b.m32);
-	matXMat.m23 = (a.m20 * b.m03) + (a.m21 * b.m13) + (a.m22 * b.m23) + (a.m23 * b.m33);
+	matXMat.value[8] = (a.value[8] * b.value[0]) + (a.value[9] * b.value[4]) + (a.value[10] * b.value[8]) + (a.value[11] * b.value[12]);
+	matXMat.value[9] = (a.value[8] * b.value[1]) + (a.value[9] * b.value[5]) + (a.value[10] * b.value[9]) + (a.value[11] * b.value[13]);
+	matXMat.value[10] = (a.value[8] * b.value[2]) + (a.value[9] * b.value[6]) + (a.value[10] * b.value[10]) + (a.value[11] * b.value[14]);
+	matXMat.value[11] = (a.value[8] * b.value[3]) + (a.value[9] * b.value[7]) + (a.value[10] * b.value[11]) + (a.value[11] * b.value[15]);
 
-	matXMat.m30 = (a.m30 * b.m00) + (a.m31 * b.m10) + (a.m32 * b.m20) + (a.m33 * b.m30);
-	matXMat.m31 = (a.m30 * b.m01) + (a.m31 * b.m11) + (a.m32 * b.m21) + (a.m33 * b.m31);
-	matXMat.m32 = (a.m30 * b.m02) + (a.m31 * b.m12) + (a.m32 * b.m22) + (a.m33 * b.m32);
-	matXMat.m33 = (a.m30 * b.m03) + (a.m31 * b.m13) + (a.m32 * b.m23) + (a.m33 * b.m33);
+	matXMat.value[12] = (a.value[12] * b.value[0]) + (a.value[13] * b.value[4]) + (a.value[14] * b.value[8]) + (a.value[15] * b.value[12]);
+	matXMat.value[13] = (a.value[12] * b.value[1]) + (a.value[13] * b.value[5]) + (a.value[14] * b.value[9]) + (a.value[15] * b.value[13]);
+	matXMat.value[14] = (a.value[12] * b.value[2]) + (a.value[13] * b.value[6]) + (a.value[14] * b.value[10]) + (a.value[15] * b.value[14]);
+	matXMat.value[15] = (a.value[12] * b.value[3]) + (a.value[13] * b.value[7]) + (a.value[14] * b.value[11]) + (a.value[15] * b.value[15]);
 	return matXMat;
 }
 
 bool My::operator==(Matrix4x4 a, Matrix4x4 b)
 {
-	return (a.m00 == b.m00 && a.m01 == b.m01 && a.m02 == b.m02 && a.m03 == b.m03 &&
-		a.m10 == b.m10 && a.m11 == b.m11 && a.m12 == b.m12 && a.m13 == b.m13 &&
-		a.m20 == b.m20 && a.m21 == b.m21 && a.m22 == b.m22 && a.m23 == b.m23 &&
-		a.m30 == b.m30 && a.m31 == b.m31 && a.m32 == b.m32 && a.m33 == b.m33);
+	return (a.value[0] == b.value[0] && a.value[1] == b.value[1] && a.value[2] == b.value[2] && a.value[3] == b.value[3] &&
+		a.value[4] == b.value[4] && a.value[5] == b.value[5] && a.value[6] == b.value[6] && a.value[7] == b.value[7] &&
+		a.value[8] == b.value[8] && a.value[9] == b.value[9] && a.value[10] == b.value[10] && a.value[11] == b.value[11] &&
+		a.value[12] == b.value[12] && a.value[13] == b.value[13] && a.value[14] == b.value[14] && a.value[15] == b.value[15]);
 }
 
 bool My::operator!=(Matrix4x4 a, Matrix4x4 b)

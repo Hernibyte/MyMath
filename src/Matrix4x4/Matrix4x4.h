@@ -8,22 +8,7 @@ namespace My
 {
 	struct Matrix4x4
 	{
-        float m00;
-        float m01;
-        float m02;
-        float m03;
-        float m10;
-        float m11;
-        float m12;
-        float m13;
-        float m20;
-        float m21;
-        float m22;
-        float m23;
-        float m30;
-        float m31;
-        float m32;
-        float m33;
+        float value[16];
 
         static Matrix4x4 identity;
         static Matrix4x4 zero;
@@ -39,6 +24,9 @@ namespace My
         void SetColumn(int index, Vector4 column);
         void SetRow(int index, Vector4 row);
 
+        float Value_ptr();
+        float Value_ptr(int i);
+
         void TRS(Vector3 position, Quaternion rotation, Vector3 scale);
 
         void Translate(Vector3 translate);
@@ -47,6 +35,9 @@ namespace My
 
         void Rotate(Quaternion quaternion);
 
+        static float Value_ptr(Matrix4x4 matrix);
+        static float Value_ptr(Matrix4x4 matrix, int i);
+        
         static Matrix4x4 Rotate(Matrix4x4 matrix, Quaternion quaternion);
 
         static Matrix4x4 Scale(Matrix4x4 matrix, Vector3 scale);
