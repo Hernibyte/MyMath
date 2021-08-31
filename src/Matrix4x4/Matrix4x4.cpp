@@ -184,6 +184,28 @@ float Matrix4x4::Value_ptr(int i)
 		return value[i];
 }
 
+void Matrix4x4::Projection(const float& angleOfView, const float& near, const float& far)
+{
+	float scale = 1 / Tan(angleOfView * 0.5 * PI / 180);
+	value[0] = scale;
+	value[5] = scale;
+	value[10] = -far / (far - near);
+	value[14] = -far * near / (far - near);
+	value[11] = -1;
+	value[15] = 0;
+}
+
+void Matrix4x4::Orthographic(const float& buttom, const float& top, const float& left, const float& right, 
+							 const float& near, const float& far)
+{
+	value[0] = 2 / (right - left);
+	value[5] = 2 / (top - buttom);
+	value[10] = -2 / (far - near);
+	value[12] = -(right + left) / (right - left);
+	value[13] = -(top + buttom) / (top - buttom);
+	value[14] = -(far + near) / (far - near);
+}
+
 void Matrix4x4::TRS(Vector3 position, Quaternion rotation, Vector3 scale)
 {
 	Translate(position);
@@ -231,6 +253,32 @@ float Matrix4x4::Value_ptr(Matrix4x4 matrix, int i)
 float Matrix4x4::Value_ptr(Matrix4x4 matrix)
 {
 	return matrix.value[0];
+}
+
+Matrix4x4 Matrix4x4::Projection(const float& angleOfView, const float& near, const float& far, Matrix4x4 matrix)
+{
+	float scale = 1 / Tan(angleOfView * 0.5 * PI / 180);
+	matrix.value[0] = scale;
+	matrix.value[5] = scale;
+	matrix.value[10] = -far / (far - near);
+	matrix.value[14] = -far * near / (far - near);
+	matrix.value[11] = -1;
+	matrix.value[15] = 0;
+
+	return matrix;
+}
+
+Matrix4x4 Matrix4x4::Orthographic(const float& buttom, const float& top, const float& left, const float& right,
+								  const float& near, const float& far, Matrix4x4 matrix)
+{
+	matrix.value[0] = 2 / (right - left);
+	matrix.value[5] = 2 / (top - buttom);
+	matrix.value[10] = -2 / (far - near);
+	matrix.value[12] = -(right + left) / (right - left);
+	matrix.value[13] = -(top + buttom) / (top - buttom);
+	matrix.value[14] = -(far + near) / (far - near);
+
+	return matrix;
 }
 
 Matrix4x4 Matrix4x4::Rotate(Matrix4x4 matrix, Quaternion quaternion)

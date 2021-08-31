@@ -9,6 +9,10 @@ namespace My
 	struct Matrix4x4
 	{
         float value[16];
+        //0  1  2  3
+        //4  5  6  7
+        //8  9  10 11
+        //12 13 14 15
 
         static Matrix4x4 identity;
         static Matrix4x4 zero;
@@ -27,6 +31,11 @@ namespace My
         float Value_ptr();
         float Value_ptr(int i);
 
+        void Projection(const float& angleOfView, const float& near, const float& far);
+
+        void Orthographic(const float& buttom, const float& top, const float& left, const float& right,
+                          const float& near, const float& far);
+
         void TRS(Vector3 position, Quaternion rotation, Vector3 scale);
 
         void Translate(Vector3 translate);
@@ -37,6 +46,11 @@ namespace My
 
         static float Value_ptr(Matrix4x4 matrix);
         static float Value_ptr(Matrix4x4 matrix, int i);
+
+        static Matrix4x4 Projection(const float& angleOfView, const float& near, const float& far, Matrix4x4 matrix);
+
+        static Matrix4x4 Orthographic(const float& buttom, const float& top, const float& left, const float& right,
+                                      const float& near, const float& far, Matrix4x4 matrix);
         
         static Matrix4x4 Rotate(Matrix4x4 matrix, Quaternion quaternion);
 
